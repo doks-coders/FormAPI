@@ -24,9 +24,6 @@ namespace FormAPI.Models.Requests
 		public OptionalProperty DateOfBirth { get; set; }
 		public OptionalProperty Gender { get; set; }
 
-		public List<CustomQuestion> CustomQuestions { get; set; } = new();
-
-
 
 	}
 }

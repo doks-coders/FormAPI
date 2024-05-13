@@ -26,10 +26,10 @@ namespace FormAPI.Infrastructure.Data
 			return items.FirstOrDefault();
 		}
 
-		public async Task<List<T>> GetItemCategory(string categoryId)
+		public async Task<List<T>> GetItemCategory(string categoryId,string categoryName)
 		{
 			var containerName = typeof(T).Name;
-			var items = await GetAllItems($"SELECT * FROM {containerName} f WHERE f.FormConfigId=\"{categoryId}\"");
+			var items = await GetAllItems($"SELECT * FROM {containerName} f WHERE f.{categoryName}=\"{categoryId}\"");
 			return items;
 		}
 

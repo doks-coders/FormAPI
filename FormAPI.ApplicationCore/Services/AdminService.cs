@@ -1,5 +1,6 @@
 ﻿using FormAPI.ApplicationCore.Services.Interfaces;
 using FormAPI.Infrastructure.Data;
+using FormAPI.Infrastructure.Validators.Admin;
 using FormAPI.Models.Entities;
 using FormAPI.Models.Extensions;
 using FormAPI.Models.Helpers;
@@ -37,7 +38,7 @@ namespace FormAPI.ApplicationCore.Services
 			item = item.SetDefaultIfEmpty();
 			item = item.SetMandatoryProperties();
 			item.id = Guid.NewGuid().ToString();
-			if(await _db.FormConfigurations.UpsertItem(item))
+			if (await _db.FormConfigurations.UpsertItem(item))
 			{
 				return;
 			}
@@ -73,7 +74,7 @@ namespace FormAPI.ApplicationCore.Services
 			updatedProperty = updatedProperty.GetIdandPartitionKey(item);
 			updatedProperty = updatedProperty.SetDefaultIfEmpty();
 			updatedProperty = updatedProperty.SetMandatoryProperties();
-			if(await _db.FormConfigurations.UpsertItem(updatedProperty))
+			if (await _db.FormConfigurations.UpsertItem(updatedProperty))
 			{
 				return;
 			}
@@ -81,19 +82,29 @@ namespace FormAPI.ApplicationCore.Services
 
 		}
 
-		public async Task CreateCustomQuestion(CustomQuestion request, string formConfigId)
+		public async Task CreateCustomQuestion(CustomQuestionRequest request, string formConfigId)
 		{
-			request.id = Guid.NewGuid().ToString();
-			request.FormConfigId = formConfigId;
-			request = request.CheckType();
-			await _db.CustomQuestions.UpsertItem(request);
+			CustomQuestionRequestValidator validator = new CustomQuestionRequestValidator();
+			var validation = await validator.ValidateAsync(request);
+			if (!validation.IsValid) throw new Exception(string.Join(", ", validation.Errors.Select(e => e.ErrorMessage).ToArray()));
+
+			var entity = mapper.CustomQuestionRequestToCustomQuestion(request);
+			entity.id = Guid.NewGuid().ToString();
+			entity.FormConfigId = formConfigId;
+			entity = entity.CheckType();
+			if (await _db.CustomQuestions.UpsertItem(entity))
+			{
+				return;
+			}
+			throw new Exception("There was a problem updating selected question");
 		}
 
-		public async Task UpdateCustomQuestion(CustomQuestion request, string id)
+		public async Task UpdateCustomQuestion(CustomQuestionRequest request, string id)
 		{
 			var question = await _db.CustomQuestions.GetItem(id);
-			request.GetIdandPartitionKey(question);
-			if(await _db.CustomQuestions.UpsertItem(request))
+			var entity = mapper.CustomQuestionRequestToCustomQuestion(request);
+			entity.GetIdandPartitionKey(question);
+			if (await _db.CustomQuestions.UpsertItem(entity))
 			{
 				return;
 			}
@@ -102,17 +113,17 @@ namespace FormAPI.ApplicationCore.Services
 
 		public async Task DeleteCustomQuestion(string id)
 		{
-			if( await _db.CustomQuestions.DeleteOneItem(id))
+			if (await _db.CustomQuestions.DeleteOneItem(id))
 			{
 				return;
 			}
 			throw new Exception("There was a problem deleting selected item");
-			
+
 		}
 
 		public async Task<List<CustomQuestion>> GetAllQuestionsForFormConfig(string formConfigId)
 		{
-			var items = await _db.CustomQuestions.GetItemCategory(formConfigId);
+			var items = await _db.CustomQuestions.GetItemCategory(formConfigId, "FormConfigId");
 
 			return items;
 		}

@@ -52,7 +52,7 @@ namespace FormAPI.Models.Extensions
 			properties.FirstName = properties.FirstName.OverrideEmptyFields(new() { Label = "First Name", Type = "text" });
 			properties.LastName = properties.LastName.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
 			properties.Email = properties.Email.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
-			properties.CustomQuestions = properties.CustomQuestions.CheckType();
+	
 			return properties;
 
 		}

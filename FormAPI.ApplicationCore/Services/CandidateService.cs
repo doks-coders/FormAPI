@@ -34,6 +34,8 @@ namespace FormAPI.ApplicationCore.Services
 			var item = await _db.FormConfigurations.GetItem(id);
 			if (item == null) throw new Exception("Specific Form Not Found");
 			var res = mapper.FormConfigurationToFormConfigurationResponse(item);
+			var questions = await _db.CustomQuestions.GetItemCategory(res.id, "FormConfigId");
+			res.CustomQuestions = questions;
 			return res;
 		}
 
@@ -44,7 +46,7 @@ namespace FormAPI.ApplicationCore.Services
 		/// <param name="id"></param>
 		/// <returns></returns>
 		/// <exception cref="Exception"></exception>
-		public async Task SubmitForm(CreateCandidateFormRequest request, string id)
+		public async Task SubmitForm(CreateCandidateFormRequest request, string formId)
 		{
 			var CreateCandidateFormRequestValidator = new CreateCandidateFormRequestValidators();
 			var validation = await CreateCandidateFormRequestValidator.ValidateAsync(request);
@@ -54,7 +56,7 @@ namespace FormAPI.ApplicationCore.Services
 
 
 			var entity = mapper.CandidateFormRequestToCandidateForm(request);
-			entity.FormConfigurationId = id;
+			entity.FormConfigurationId = formId;
 			entity.id = Guid.NewGuid().ToString();
 			if(await _db.CandidateForms.UpsertItem(entity))
 			{

@@ -27,6 +27,6 @@ namespace FormAPI.Models.Entities
 		public OptionalEntityProperty DateOfBirth { get; set; }
 		public OptionalEntityProperty Gender { get; set; }
 
-		public List<CustomQuestion> CustomQuestions { get; set; }
+	
 	}
 }

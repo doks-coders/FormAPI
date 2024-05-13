@@ -1,5 +1,6 @@
 ﻿using FormAPI.Models.Entities;
 using FormAPI.Models.Helpers;
+using FormAPI.Models.Requests;
 using FormAPI.Models.SharedModels;
 
 
@@ -29,7 +30,7 @@ namespace FormAPI.Models.Responses
 
 		public OptionalEntityProperty? Gender { get; set; } = new OptionalEntityProperty() { Label = "Gender", Type = "text" };
 
-		public List<CustomQuestion> CustomQuestions { get; set; } = new List<CustomQuestion>() { new() };
+		public List<CustomQuestionRequest> CustomQuestions { get; set; } = new List<CustomQuestionRequest>() { new() };
 
 		public List<string> TypeOptionsDynamic { get; set; } = Constants.TypeOptionsDynamic;
 

@@ -68,22 +68,22 @@ namespace FormAPI.Controllers
 		}
 
 
-		[HttpGet("get-form-questions/{questionId}")]
-		public async Task<ActionResult> GetCustomQuestionsForFormConfig(string questionId)
+		[HttpGet("get-form-questions/{formId}")]
+		public async Task<ActionResult> GetCustomQuestionsForFormConfig(string formId)
 		{
-			var res = await _adminService.GetAllQuestionsForFormConfig(questionId);
+			var res = await _adminService.GetAllQuestionsForFormConfig(formId);
 			return Ok(res);
 		}
 
 		[HttpPost("create-question/{formId}")]
-		public async Task<ActionResult> CreateCustomQuestion([FromBody] CustomQuestion request, string formId)
+		public async Task<ActionResult> CreateCustomQuestion([FromBody] CustomQuestionRequest request, string formId)
 		{
 			await _adminService.CreateCustomQuestion(request, formId);
 			return Ok("Item Created Successfully");
 		}
 
-		[HttpPost("update-question/{questionId}")]
-		public async Task<ActionResult> UpdateCustomQuestion([FromBody] CustomQuestion request, string questionId)
+		[HttpPut("update-question/{questionId}")]
+		public async Task<ActionResult> UpdateCustomQuestion([FromBody] CustomQuestionRequest request, string questionId)
 		{
 			await _adminService.UpdateCustomQuestion(request, questionId);
 			return Ok("Item Updated Successfully");
