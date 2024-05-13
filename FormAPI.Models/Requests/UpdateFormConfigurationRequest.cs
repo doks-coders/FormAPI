@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.Requests
 {
-	public class UpdateFormConfiguration:FormConfigurationBase
+	public class UpdateFormConfigurationRequest:FormConfigurationBase
 	{
 		public string id { get; set; }
 	}

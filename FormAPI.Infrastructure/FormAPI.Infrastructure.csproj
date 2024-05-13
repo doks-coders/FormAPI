@@ -8,5 +8,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Azure.Cosmos" Version="3.39.1" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\FormAPI.Models\FormAPI.Models.csproj" />
+	</ItemGroup>
 
 </Project>
