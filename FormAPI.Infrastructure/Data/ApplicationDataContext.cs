@@ -8,5 +8,11 @@ namespace FormAPI.Infrastructure.Data
 {
 	public class ApplicationDataContext
 	{
+		public ApplicationDataContext(DataContext db)
+		{
+			
+		}
+
+	
 	}
 }
