@@ -6,27 +6,32 @@ namespace FormAPI.Models.Responses
 {
 	public class FormSchemaResponse
 	{
-		public MandatoryProperty FirstName { get; set; } = new MandatoryProperty() { Mandatory = true };
+		public string ProgramTitle { get; set; } = "Work Application";
 
-		public MandatoryProperty LastName { get; set; } = new MandatoryProperty() { Mandatory = true };
+		public string ProgramDescription { get; set; } = "This is a work application research study";
 
-		public MandatoryProperty Email { get; set; } = new MandatoryProperty() { Mandatory = true };
+		public MandatoryEntityProperty FirstName { get; set; } = new MandatoryEntityProperty() { Mandatory = true,Label="First Name",Type="text" };
 
-		public OptionalProperty? Phone { get; set; } = new OptionalProperty() {};
+		public MandatoryEntityProperty LastName { get; set; } = new MandatoryEntityProperty() { Mandatory = true,Label="Last Name",Type="text" };
 
-		public OptionalProperty? Nationality { get; set; } = new OptionalProperty() {};
+		public MandatoryEntityProperty Email { get; set; } = new MandatoryEntityProperty() { Mandatory = true, Label = "Last Name", Type = "text" };
 
-		public OptionalProperty? CurrentResidence { get; set; } = new OptionalProperty() { };
+		public OptionalEntityProperty? Phone { get; set; } = new OptionalEntityProperty() {  Label = "Phone", Type = "number" };
 
-		public OptionalProperty? IdNumber { get; set; } = new OptionalProperty() {};
+		public OptionalEntityProperty? Nationality { get; set; } = new OptionalEntityProperty() { Label = "Nationality", Type = "text" };
 
-		public OptionalProperty? DateOfBirth { get; set; } = new OptionalProperty() { };
+		public OptionalEntityProperty? CurrentResidence { get; set; } = new OptionalEntityProperty() { Label = "Current Residence", Type = "text" };
 
-		public OptionalProperty? Gender { get; set; } = new OptionalProperty() { };
+		public OptionalEntityProperty? IdNumber { get; set; } = new OptionalEntityProperty() { Label = "Id Number", Type = "text" };
 
-		public List<DynamicFormProperties> CustomQuestions { get; set; } = new();
+		public OptionalEntityProperty? DateOfBirth { get; set; } = new OptionalEntityProperty() { Label = "Date of Birth", Type = "text" };
+
+		public OptionalEntityProperty? Gender { get; set; } = new OptionalEntityProperty() { Label = "Gender", Type = "text" };
+
+		public List<DynamicFormProperties> CustomQuestions { get; set; } = new List<DynamicFormProperties>() { new() };
 
 		public List<string> TypeOptionsDynamic { get; set; } = Constants.TypeOptionsDynamic;
-	
+
+		public List<string> TypeOptions { get; set; } = Constants.TypeOptions;
 	}
 }

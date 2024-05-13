@@ -32,7 +32,6 @@ namespace FormAPI.Models.Extensions
 			formProperties.FirstName.Mandatory = true;
 			formProperties.LastName.Mandatory = true;
 			formProperties.Email.Mandatory = true;
-			formProperties.partitionKeyPath = "Forms";
 			return formProperties;
 		}
 
@@ -43,16 +42,16 @@ namespace FormAPI.Models.Extensions
 		/// <returns></returns>
 		public static FormConfiguration SetDefaultIfEmpty(this FormConfiguration properties)
 		{
-			properties.CurrentResidence = properties.CurrentResidence.IncaseOfEmptyFields(new() { Label = "Current Residence", Type = "text" });
-			properties.DateOfBirth = properties.DateOfBirth.IncaseOfEmptyFields(new() { Label = "Date Of Birth", Type = "text" });
-			properties.Phone = properties.Phone.IncaseOfEmptyFields(new() { Label = "Phone", Type = "number" });
-			properties.Gender = properties.Gender.IncaseOfEmptyFields(new() { Label = "Gender", Type = "text" });
-			properties.Nationality = properties.Nationality.IncaseOfEmptyFields(new() { Label = "Nationality", Type = "text" });
-			properties.IdNumber = properties.IdNumber.IncaseOfEmptyFields(new() { Label = "Id Number", Type = "number" });
+			properties.CurrentResidence = properties.CurrentResidence.OverrideEmptyFields(new() { Label = "Current Residence", Type = "text" });
+			properties.DateOfBirth = properties.DateOfBirth.OverrideEmptyFields(new() { Label = "Date Of Birth", Type = "text" });
+			properties.Phone = properties.Phone.OverrideEmptyFields(new() { Label = "Phone", Type = "number" });
+			properties.Gender = properties.Gender.OverrideEmptyFields(new() { Label = "Gender", Type = "text" });
+			properties.Nationality = properties.Nationality.OverrideEmptyFields(new() { Label = "Nationality", Type = "text" });
+			properties.IdNumber = properties.IdNumber.OverrideEmptyFields(new() { Label = "Id Number", Type = "number" });
 
-			properties.FirstName = properties.FirstName.IncaseOfEmptyFields(new() { Label = "First Name", Type = "text" });
-			properties.LastName = properties.LastName.IncaseOfEmptyFields(new() { Label = "Last Name", Type = "text" });
-			properties.Email = properties.Email.IncaseOfEmptyFields(new() { Label = "Last Name", Type = "text" });
+			properties.FirstName = properties.FirstName.OverrideEmptyFields(new() { Label = "First Name", Type = "text" });
+			properties.LastName = properties.LastName.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
+			properties.Email = properties.Email.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
 			properties.CustomQuestions = properties.CustomQuestions.CheckType();
 			return properties;
 

@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.Entities
 {
-
+	/// <summary>
+	/// These are the properties of the Candidate Form Entity
+	/// </summary>
 	public class CandidateForm : BaseEntity
 	{
 		public string FormConfigurationId { get; set; }

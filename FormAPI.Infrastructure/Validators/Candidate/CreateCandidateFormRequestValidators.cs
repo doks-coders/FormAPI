@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Infrastructure.Validators.Candidate
 {
+	/// <summary>
+	/// This method utilises fluent validatiions to validate the Candidate's submitted form
+	/// </summary>
 	public class CreateCandidateFormRequestValidators : AbstractValidator<CreateCandidateFormRequest>
 	{
 		public CreateCandidateFormRequestValidators()

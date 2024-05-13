@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Infrastructure.Data
 {
-
+	/// <summary>
+	/// This class is the DataContext, it contains the base intitaliser for the Cosmos Database
+	/// </summary>
 	public class DataContext
 	{
 		private readonly string cosmosUrl;
@@ -52,6 +54,9 @@ namespace FormAPI.Infrastructure.Data
 
 	}
 
+	/// <summary>
+	/// This class contains the model that would be used to retrieve keys for the datacontext
+	/// </summary>
 	public class DbContextOptions()
 	{
 		public string CosmosUrl { get; set; }

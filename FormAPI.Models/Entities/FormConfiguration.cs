@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.Entities
 {
+	/// <summary>
+	/// This are the properties of the FormConfiguration entity
+	/// </summary>
 	public class FormConfiguration:BaseEntity
 	{
 
