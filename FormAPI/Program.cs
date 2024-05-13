@@ -1,4 +1,5 @@
 using FormAPI.Extensions;
+using FormAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ if (app.Environment.IsDevelopment())
 	app.UseSwagger();
 	app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ErrorMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

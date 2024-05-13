@@ -2,6 +2,7 @@
 using FormAPI.ApplicationCore.Services.Interfaces;
 using FormAPI.ApplicationCore.Services;
 using FormAPI.Infrastructure.Data;
+using FormAPI.Models.SharedModels;
 
 namespace FormAPI.Extensions
 {
@@ -9,12 +10,11 @@ namespace FormAPI.Extensions
 	{
 		public static IServiceCollection AddApplicationCoreServices(this IServiceCollection services, IConfiguration config)
 		{
-
 			services.AddScoped(sp => new DataContext(new()
 			{
-				CosmosKey = config.GetSection("cosmosKey").Value,
-				CosmosUrl = config.GetSection("cosmosUrl").Value,
-				DatabaseName = config.GetSection("databaseName").Value
+				CosmosKey = config.GetSection("CosmosConfigurations:CosmosKey").Value,
+				CosmosUrl = config.GetSection("CosmosConfigurations:CosmosUrl").Value,
+				DatabaseName = config.GetSection("CosmosConfigurations:DatabaseName").Value
 
 			}));
 			services.AddScoped<ApplicationDataContext>();

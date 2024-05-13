@@ -11,14 +11,12 @@ namespace FormAPI.Controllers
 
 	public class AdminController : BaseApiController
 	{
-		private readonly ApplicationDataContext _db;
-		private readonly MapperProfiles mapper = new();
+	
 		private readonly IAdminService _adminService;
 
 
-		public AdminController(ApplicationDataContext db, IAdminService adminService)
+		public AdminController( IAdminService adminService)
 		{
-			_db = db ?? throw new ArgumentNullException("Didn't work");
 			_adminService = adminService;
 		}
 
@@ -33,23 +31,23 @@ namespace FormAPI.Controllers
 		{
 			await _adminService.CreateForm(properties);
 
-			return Ok();
+			return Ok("Item Created Successfully");
 		}
 
 
 		[HttpGet("update-form-config/{id}")]
 		public async Task<ActionResult> GetFormConfig(string id)
 		{
-			var res = await _db.FormConfigurations.GetItem(id);
+			var res = await _adminService.GetFormConfig(id);
 
 			return Ok(res);
 		}
 
-		[HttpPost("update-form-config/{id}")]
+		[HttpPatch("update-form-config/{id}")]
 		public async Task<ActionResult> UpdateForm([FromBody] UpdateFormConfigurationRequest request, string id)
 		{
 			await _adminService.UpdateForm(request, id);
-			return Ok();
+			return Ok("Item Updated Successfully");
 		}
 
 

@@ -14,15 +14,15 @@ namespace FormAPI.Models.Entities
 
 		public string ProgramDescription { get; set; }
 
-		public MandatoryProperty FirstName { get; set; }
-		public MandatoryProperty LastName { get; set; }
-		public MandatoryProperty Email { get; set; }
-		public OptionalProperty Phone { get; set; }
-		public OptionalProperty Nationality { get; set; }
-		public OptionalProperty CurrentResidence { get; set; }
-		public OptionalProperty IdNumber { get; set; }
-		public OptionalProperty DateOfBirth { get; set; }
-		public OptionalProperty Gender { get; set; }
+		public MandatoryEntityProperty FirstName { get; set; }
+		public MandatoryEntityProperty LastName { get; set; }
+		public MandatoryEntityProperty Email { get; set; }
+		public OptionalEntityProperty Phone { get; set; }
+		public OptionalEntityProperty Nationality { get; set; }
+		public OptionalEntityProperty CurrentResidence { get; set; }
+		public OptionalEntityProperty IdNumber { get; set; }
+		public OptionalEntityProperty DateOfBirth { get; set; }
+		public OptionalEntityProperty Gender { get; set; }
 
 		public List<DynamicFormProperties> CustomQuestions { get; set; }
 	}

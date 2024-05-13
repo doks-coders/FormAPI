@@ -25,7 +25,7 @@ namespace FormAPI.ApplicationCore.Services
 		public async Task<FormConfigurationsResponse> GetFormConfiguration(string id)
 		{
 			var item = await _db.FormConfigurations.GetItem(id);
-			if (item == null) throw new Exception("None");
+			if (item == null) throw new Exception("Specific Form Not Found");
 			var res = mapper.FormConfigurationToFormConfigurationResponse(item);
 			return res;
 		}
@@ -35,7 +35,11 @@ namespace FormAPI.ApplicationCore.Services
 			var entity = mapper.CandidateFormRequestToCandidateForm(request);
 			entity.FormConfigurationId = id;
 			entity.id = Guid.NewGuid().ToString();
-			await _db.CandidateForms.UpsertItem(entity);
+			if(await _db.CandidateForms.UpsertItem(entity))
+			{
+				return;
+			}
+			throw new Exception("Did not save Successfully");
 		}
 	}
 }

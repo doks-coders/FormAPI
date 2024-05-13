@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.SharedModels
 {
-	public class MandatoryProperty
+	public class MandatoryEntityProperty:BaseProperty
 	{
 		public bool Mandatory { get; set; } = false;
 	}

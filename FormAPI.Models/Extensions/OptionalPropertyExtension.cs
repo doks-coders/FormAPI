@@ -9,16 +9,10 @@ namespace FormAPI.Models.Extensions
 {
 	public static class OptionalPropertyExtension
 	{
-		public static OptionalProperty IncaseOfEmptyFields(this OptionalProperty property,OptionalProperty subsitute)
+		public static OptionalEntityProperty IncaseOfEmptyFields(this OptionalEntityProperty property, OptionalEntityProperty subsitute)
 		{
-			if (string.IsNullOrEmpty(property.Type))
-			{
-				property.Type = subsitute.Type;
-			}
-			if (string.IsNullOrEmpty(property.Label))
-			{
-				property.Label = subsitute.Label;
-			}
+			property.Type = subsitute.Type;
+			property.Label = subsitute.Label;
 			return property;
 		}
 	}

@@ -1,4 +1,5 @@
-﻿using FormAPI.Models.Requests;
+﻿using FormAPI.Models.Entities;
+using FormAPI.Models.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace FormAPI.ApplicationCore.Services.Interfaces
 	{
 		Task CreateForm(CreateFormConfigurationRequest properties);
 		Task UpdateForm(UpdateFormConfigurationRequest request, string id);
+		Task <FormConfiguration> GetFormConfig(string id);
 
 	}
 }

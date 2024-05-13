@@ -9,12 +9,10 @@ namespace FormAPI.Models.Extensions
 {
 	public static class MandatoryPropertyExtensions
 	{
-		public static MandatoryProperty IncaseOfEmptyFields (this MandatoryProperty property, MandatoryProperty substitute)
+		public static MandatoryEntityProperty IncaseOfEmptyFields (this MandatoryEntityProperty property, MandatoryEntityProperty substitute)
 		{
-			if (string.IsNullOrEmpty(property.Label))
-			{
-				property.Label = substitute.Label;
-			}
+			property.Type = substitute.Type;
+			property.Label = substitute.Label;
 			return property;
 		}
 		
