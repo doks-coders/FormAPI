@@ -1,4 +1,6 @@
 ﻿
+using FormAPI.ApplicationCore.Services.Interfaces;
+using FormAPI.ApplicationCore.Services;
 using FormAPI.Infrastructure.Data;
 
 namespace FormAPI.Extensions
@@ -16,7 +18,8 @@ namespace FormAPI.Extensions
 
 			}));
 			services.AddScoped<ApplicationDataContext>();
-
+			services.AddScoped<IAdminService, AdminService>();
+			services.AddScoped<ICandidateService, CandidateService>();
 			return services;
 		}
 	}
