@@ -1,4 +1,5 @@
-﻿using FormAPI.Models.SharedModels;
+﻿using FormAPI.Models.Entities;
+using FormAPI.Models.SharedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.Requests
 {
-	public class FormConfigurationBase
+    public class FormConfigurationBase
 	{
 		public string ProgramTitle { get; set; }
 
@@ -23,7 +24,7 @@ namespace FormAPI.Models.Requests
 		public OptionalProperty DateOfBirth { get; set; }
 		public OptionalProperty Gender { get; set; }
 
-		public List<DynamicFormProperties> CustomQuestions { get; set; } = new();
+		public List<CustomQuestion> CustomQuestions { get; set; } = new();
 
 
 

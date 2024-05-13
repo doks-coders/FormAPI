@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.Entities
 {
-	/// <summary>
-	/// This are the properties of the FormConfiguration entity
-	/// </summary>
-	public class FormConfiguration:BaseEntity
+    /// <summary>
+    /// This are the properties of the FormConfiguration entity
+    /// </summary>
+    public class FormConfiguration:BaseEntity
 	{
 
 		public string ProgramTitle { get; set; }
@@ -27,6 +27,6 @@ namespace FormAPI.Models.Entities
 		public OptionalEntityProperty DateOfBirth { get; set; }
 		public OptionalEntityProperty Gender { get; set; }
 
-		public List<DynamicFormProperties> CustomQuestions { get; set; }
+		public List<CustomQuestion> CustomQuestions { get; set; }
 	}
 }

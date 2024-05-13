@@ -1,10 +1,11 @@
-﻿using FormAPI.Models.Helpers;
+﻿using FormAPI.Models.Entities;
+using FormAPI.Models.Helpers;
 using FormAPI.Models.SharedModels;
 
 
 namespace FormAPI.Models.Responses
 {
-	public class FormSchemaResponse
+    public class FormSchemaResponse
 	{
 		public string ProgramTitle { get; set; } = "Work Application";
 
@@ -28,7 +29,7 @@ namespace FormAPI.Models.Responses
 
 		public OptionalEntityProperty? Gender { get; set; } = new OptionalEntityProperty() { Label = "Gender", Type = "text" };
 
-		public List<DynamicFormProperties> CustomQuestions { get; set; } = new List<DynamicFormProperties>() { new() };
+		public List<CustomQuestion> CustomQuestions { get; set; } = new List<CustomQuestion>() { new() };
 
 		public List<string> TypeOptionsDynamic { get; set; } = Constants.TypeOptionsDynamic;
 

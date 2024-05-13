@@ -14,5 +14,10 @@ namespace FormAPI.ApplicationCore.Services.Interfaces
 		Task UpdateForm(UpdateFormConfigurationRequest request, string id);
 		Task <FormConfiguration> GetFormConfig(string id);
 
+		Task CreateCustomQuestion(CustomQuestion request, string formConfigId);
+		Task UpdateCustomQuestion(CustomQuestion request, string id);
+		Task DeleteCustomQuestion(string id);
+		Task<List<CustomQuestion>> GetAllQuestionsForFormConfig(string formConfigId);
+
 	}
 }

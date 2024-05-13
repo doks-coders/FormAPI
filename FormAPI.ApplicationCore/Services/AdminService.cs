@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace FormAPI.ApplicationCore.Services
 {
@@ -78,6 +79,42 @@ namespace FormAPI.ApplicationCore.Services
 			}
 			throw new Exception("Did not Save Successfully");
 
+		}
+
+		public async Task CreateCustomQuestion(CustomQuestion request, string formConfigId)
+		{
+			request.id = Guid.NewGuid().ToString();
+			request.FormConfigId = formConfigId;
+			request = request.CheckType();
+			await _db.CustomQuestions.UpsertItem(request);
+		}
+
+		public async Task UpdateCustomQuestion(CustomQuestion request, string id)
+		{
+			var question = await _db.CustomQuestions.GetItem(id);
+			request.GetIdandPartitionKey(question);
+			if(await _db.CustomQuestions.UpsertItem(request))
+			{
+				return;
+			}
+			throw new Exception("There was a problem updating selected question");
+		}
+
+		public async Task DeleteCustomQuestion(string id)
+		{
+			if( await _db.CustomQuestions.DeleteOneItem(id))
+			{
+				return;
+			}
+			throw new Exception("There was a problem deleting selected item");
+			
+		}
+
+		public async Task<List<CustomQuestion>> GetAllQuestionsForFormConfig(string formConfigId)
+		{
+			var items = await _db.CustomQuestions.GetItemCategory(formConfigId);
+
+			return items;
 		}
 	}
 }
