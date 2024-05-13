@@ -1,4 +1,8 @@
 ﻿using FormAPI.ApplicationCore.Services.Interfaces;
+using FormAPI.Infrastructure.Data;
+using FormAPI.Models.Helpers;
+using FormAPI.Models.Requests;
+using FormAPI.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +13,29 @@ namespace FormAPI.ApplicationCore.Services
 {
 	public class CandidateService:ICandidateService
 	{
+
+		public MapperProfiles mapper = new();
+		private readonly ApplicationDataContext _db;
+
+		public CandidateService(ApplicationDataContext db)
+		{
+			_db = db;
+		}
+
+		public async Task<FormConfigurationsResponse> GetFormConfiguration(string id)
+		{
+			var item = await _db.FormConfigurations.GetItem(id);
+			if (item == null) throw new Exception("None");
+			var res = mapper.FormConfigurationToFormConfigurationResponse(item);
+			return res;
+		}
+
+		public async Task SubmitForm(CreateCandidateFormRequest request, string id)
+		{
+			var entity = mapper.CandidateFormRequestToCandidateForm(request);
+			entity.FormConfigurationId = id;
+			entity.id = Guid.NewGuid().ToString();
+			await _db.CandidateForms.UpsertItem(entity);
+		}
 	}
 }
