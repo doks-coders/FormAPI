@@ -26,6 +26,7 @@ namespace FormAPI.Models.Responses
 
 		public List<DynamicFormProperties> CustomQuestions { get; set; } = new();
 
-		public List<string> TypeOptions { get; set; } = Constants.TypeOptions;
+		public List<string> TypeOptionsDynamic { get; set; } = Constants.TypeOptionsDynamic;
+	
 	}
 }

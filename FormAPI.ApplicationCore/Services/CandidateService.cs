@@ -1,5 +1,6 @@
 ﻿using FormAPI.ApplicationCore.Services.Interfaces;
 using FormAPI.Infrastructure.Data;
+using FormAPI.Infrastructure.Validators.Candidate;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
 using FormAPI.Models.Responses;
@@ -22,6 +23,12 @@ namespace FormAPI.ApplicationCore.Services
 			_db = db;
 		}
 
+		/// <summary>
+		/// This method gets the form configuration from the database, this is used by the frontend developers to modify the login page
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public async Task<FormConfigurationsResponse> GetFormConfiguration(string id)
 		{
 			var item = await _db.FormConfigurations.GetItem(id);
@@ -30,8 +37,22 @@ namespace FormAPI.ApplicationCore.Services
 			return res;
 		}
 
+		/// <summary>
+		/// This is method is used for submitting the form to the database
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		/// <exception cref="Exception"></exception>
 		public async Task SubmitForm(CreateCandidateFormRequest request, string id)
 		{
+			var CreateCandidateFormRequestValidator = new CreateCandidateFormRequestValidators();
+			var validation = await CreateCandidateFormRequestValidator.ValidateAsync(request);
+
+			if (!validation.IsValid) throw new Exception(string.Join(", ", validation.Errors.Select(e => e.ErrorMessage).ToArray()));
+			
+
+
 			var entity = mapper.CandidateFormRequestToCandidateForm(request);
 			entity.FormConfigurationId = id;
 			entity.id = Guid.NewGuid().ToString();

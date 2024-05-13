@@ -25,7 +25,7 @@ namespace FormAPI.ApplicationCore.Services
 		}
 
 		/// <summary>
-		/// This is method creates the configuration for the form
+		/// This is method creates the a form configuration that will be used to display information to the user
 		/// </summary>
 		/// <param name="properties"></param>
 		/// <returns></returns>
