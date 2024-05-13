@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FormAPI.Models.Entities
 {
-	public class FormConfiguration
+	public class FormConfiguration:BaseEntity
 	{
 
 		public string ProgramTitle { get; set; }
