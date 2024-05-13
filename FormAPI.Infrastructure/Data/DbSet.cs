@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Cosmos;
+﻿using FormAPI.Models.Entities;
+using Microsoft.Azure.Cosmos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +24,12 @@ namespace FormAPI.Infrastructure.Data
 			var items = await GetAllItems($"SELECT * FROM {containerName} f WHERE f.id=\"{id}\"");
 			return items.FirstOrDefault();
 		}
+
 		public async Task<List<T>> GetAllItems(string? query = "SELECT * FROM c")
 		{
 			var containerName = typeof(T).Name;
 			var container = await _db.GetContainer(containerName);
-			QueryDefinition queryDefinition = new QueryDefinition(query);
+			var queryDefinition = new QueryDefinition(query);
 			var items = new List<T>();
 			try
 			{
@@ -58,7 +60,7 @@ namespace FormAPI.Infrastructure.Data
 			var containerName = typeof(T).Name;
 			var container = await _db.GetContainer(containerName);
 
-			PartitionKey partitionKey = new PartitionKey(partitionKeyValue);
+			var partitionKey = new PartitionKey(partitionKeyValue);
 			ItemResponse<T> item;
 			try
 			{

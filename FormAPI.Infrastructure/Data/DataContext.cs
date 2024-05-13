@@ -46,7 +46,6 @@ namespace FormAPI.Infrastructure.Data
 	
 			Container container = await database.CreateContainerIfNotExistsAsync(containerName, "/partitionKeyPath", 400);
 
-
 			return container;
 
 		}
