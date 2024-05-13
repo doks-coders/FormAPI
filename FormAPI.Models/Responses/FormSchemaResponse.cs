@@ -23,6 +23,6 @@ namespace FormAPI.Models.Responses
 
 		public OptionalProperty? Gender { get; set; } = new OptionalProperty() { Label = "Gender", Type = "text" };
 
-		public List<DynamicFormProperties> CustomQuestions { get; set; }
+		public List<DynamicFormProperties> CustomQuestions { get; set; } = new();
 	}
 }

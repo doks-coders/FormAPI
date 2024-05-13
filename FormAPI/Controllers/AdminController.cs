@@ -40,7 +40,7 @@ namespace FormAPI.Controllers
 		[HttpGet("update-form-config/{id}")]
 		public async Task<ActionResult> GetFormConfig(string id)
 		{
-			var res = await _db.FormProperties.GetItem(id);
+			var res = await _db.FormConfigurations.GetItem(id);
 
 			return Ok(res);
 		}
@@ -53,10 +53,6 @@ namespace FormAPI.Controllers
 		}
 
 
-		[HttpGet("get-configurations")]
-		public async Task<ActionResult> GetConfigurations()
-		{
-			return Ok(new ConfigurationsResponse());
-		}
+		
 	}
 }

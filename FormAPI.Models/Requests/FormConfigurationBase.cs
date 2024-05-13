@@ -23,6 +23,9 @@ namespace FormAPI.Models.Requests
 		public OptionalProperty DateOfBirth { get; set; }
 		public OptionalProperty Gender { get; set; }
 
-		public List<DynamicFormProperties> CustomQuestions { get; set; }
+		public List<DynamicFormProperties> CustomQuestions { get; set; } = new();
+
+
+
 	}
 }

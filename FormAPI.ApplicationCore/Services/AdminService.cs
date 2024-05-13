@@ -25,11 +25,15 @@ namespace FormAPI.ApplicationCore.Services
 		public async Task CreateForm(CreateFormConfigurationRequest properties)
 		{
 			var item = mapper.CreateFormConfigurationRequestToFormConfiguration(properties);
-
+			item = item.SetDefaultIfEmpty();
 			item = item.SetMandatoryProperties();
 			item.id = Guid.NewGuid().ToString();
 			item.partitionKeyPath = "MyTestPkValue";
-			var isSuccess = await _db.FormConfigurations.UpsertItem(item);
+			if(await _db.FormConfigurations.UpsertItem(item))
+			{
+				return;
+			}
+			throw new Exception("Did not Save Successfully");
 		}
 
 		public async Task UpdateForm(UpdateFormConfigurationRequest request, string id)
