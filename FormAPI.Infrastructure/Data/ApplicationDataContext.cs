@@ -16,13 +16,6 @@ namespace FormAPI.Infrastructure.Data
 		public DbSet<CustomQuestion> CustomQuestions { get; set; }
 
 
-		public static async Task<ApplicationDataContext> InitializeDataContext(Database database)
-		{
-			var appContext = new ApplicationDataContext(database);
-			await appContext.InitializeAllFields();
-			return appContext;
-		}
-
 
 		public async Task InitializeAllFields()
 		{
@@ -30,6 +23,7 @@ namespace FormAPI.Infrastructure.Data
 			FormConfigurations = await GetContainer<FormConfiguration>( _db);
 			CustomQuestions = await GetContainer<CustomQuestion>(_db);
 		}
+
 
 		public async Task<DbSet<T>> GetContainer<T>(Database database) where T : class
 		{
@@ -39,6 +33,15 @@ namespace FormAPI.Infrastructure.Data
 			item.Container = container;
 			return item;
 		}
+
+
+		public static async Task<ApplicationDataContext> InitializeDataContext(Database database)
+		{
+			var appContext = new ApplicationDataContext(database);
+			await appContext.InitializeAllFields();
+			return appContext;
+		}
+
 
 	}
 

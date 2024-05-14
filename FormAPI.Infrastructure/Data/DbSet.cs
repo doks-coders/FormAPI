@@ -6,14 +6,10 @@ namespace FormAPI.Infrastructure.Data
 {
 	public class DbSet<T> where T : class
 	{
-		private readonly DataContext _db;
-		private readonly Container container;
+
 		public Container Container { get; set; }
 	
-		public DbSet()
-		{
-		
-		}
+	
 
 	
 

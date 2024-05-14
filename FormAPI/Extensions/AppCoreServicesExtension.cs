@@ -10,23 +10,7 @@ namespace FormAPI.Extensions
 	{
 		public static async Task<IServiceCollection> AddApplicationCoreServices(this IServiceCollection services, IConfiguration config)
 		{
-			/*
-			services.AddSingleton(sp => new DataContext(new()
-			{
-				CosmosKey = config.GetSection("CosmosConfigurations:CosmosKey").Value,
-				CosmosUrl = config.GetSection("CosmosConfigurations:CosmosUrl").Value,
-				DatabaseName = config.GetSection("CosmosConfigurations:DatabaseName").Value
-
-			}));
-
-			services.AddSingleton(sp => DataContext.InitialiseDb(new()
-			{
-				CosmosKey = config.GetSection("CosmosConfigurations:CosmosKey").Value,
-				CosmosUrl = config.GetSection("CosmosConfigurations:CosmosUrl").Value,
-				DatabaseName = config.GetSection("CosmosConfigurations:DatabaseName").Value
-
-			}));
-			*/
+		
 			var CosmosKey = config.GetSection("CosmosConfigurations:CosmosKey").Value;
 			var CosmosUrl = config.GetSection("CosmosConfigurations:CosmosUrl").Value;
 			var DatabaseName = config.GetSection("CosmosConfigurations:DatabaseName").Value;
