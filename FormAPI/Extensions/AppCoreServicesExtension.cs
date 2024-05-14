@@ -20,6 +20,8 @@ namespace FormAPI.Extensions
 			services.AddScoped<ApplicationDataContext>();
 			services.AddScoped<IAdminService, AdminService>();
 			services.AddScoped<ICandidateService, CandidateService>();
+
+			//Paragraph, YesNo, Dropdown, MultipleChoice, Date, Number)
 			return services;
 		}
 	}

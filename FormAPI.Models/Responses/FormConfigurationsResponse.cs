@@ -26,6 +26,6 @@ namespace FormAPI.Models.Responses
 		public OptionalProperty DateOfBirth { get; set; }
 		public OptionalProperty Gender { get; set; }
 
-		public List<CustomQuestion> CustomQuestions { get; set; }
+		public List<object> CustomQuestions { get; set; }
 	}
 }

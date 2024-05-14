@@ -1,6 +1,7 @@
 ﻿using FormAPI.ApplicationCore.Services.Interfaces;
 using FormAPI.Infrastructure.Data;
 using FormAPI.Infrastructure.Validators.Candidate;
+using FormAPI.Models.Extensions;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
 using FormAPI.Models.Responses;
@@ -35,7 +36,7 @@ namespace FormAPI.ApplicationCore.Services
 			if (item == null) throw new Exception("Specific Form Not Found");
 			var res = mapper.FormConfigurationToFormConfigurationResponse(item);
 			var questions = await _db.CustomQuestions.GetItemCategory(res.id, "FormConfigId");
-			res.CustomQuestions = questions;
+			res.CustomQuestions = questions.GetChildren();
 			return res;
 		}
 
