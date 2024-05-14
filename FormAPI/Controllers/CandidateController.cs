@@ -18,10 +18,10 @@ namespace FormAPI.Controllers
 		/// for the frontend developer to design the ui
 		/// </summary>
 		/// <returns></returns>
-		[HttpGet("{id}")]
-		public async Task<ActionResult> Index(string id)
+		[HttpGet("{formId}")]
+		public async Task<ActionResult> Index(string formId)
 		{
-			var res = await _candidateService.GetFormConfiguration(id);
+			var res = await _candidateService.GetFormConfiguration(formId);
 			return Ok(res);
 		}
 
@@ -29,10 +29,10 @@ namespace FormAPI.Controllers
 		/// This method creates an endpoint used that saves candidates form
 		/// </summary>
 		/// <returns></returns>
-		[HttpPost("{id}")]
-		public async Task<ActionResult> Index([FromBody] CreateCandidateFormRequest request, string id)
+		[HttpPost("{formId}")]
+		public async Task<ActionResult> Index([FromBody] CreateCandidateFormRequest request, string formId)
 		{
-			await _candidateService.SubmitForm(request, id);
+			await _candidateService.SubmitForm(request, formId);
 			return Ok();
 		}
 	}
