@@ -1,9 +1,4 @@
 ﻿using Microsoft.Azure.Cosmos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormAPI.Infrastructure.Data
 {
@@ -45,7 +40,7 @@ namespace FormAPI.Infrastructure.Data
 		public async Task<Container> GetContainer(string containerName)
 		{
 			var database = await InitialiseDb();
-	
+
 			Container container = await database.CreateContainerIfNotExistsAsync(containerName, "/partitionKeyPath", 400);
 
 			return container;

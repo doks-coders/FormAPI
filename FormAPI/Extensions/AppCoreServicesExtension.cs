@@ -1,8 +1,7 @@
 ﻿
-using FormAPI.ApplicationCore.Services.Interfaces;
 using FormAPI.ApplicationCore.Services;
+using FormAPI.ApplicationCore.Services.Interfaces;
 using FormAPI.Infrastructure.Data;
-using FormAPI.Models.SharedModels;
 
 namespace FormAPI.Extensions
 {

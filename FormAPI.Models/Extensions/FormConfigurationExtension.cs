@@ -1,9 +1,4 @@
 ﻿using FormAPI.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormAPI.Models.Extensions
 {
@@ -52,7 +47,7 @@ namespace FormAPI.Models.Extensions
 			properties.FirstName = properties.FirstName.OverrideEmptyFields(new() { Label = "First Name", Type = "text" });
 			properties.LastName = properties.LastName.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
 			properties.Email = properties.Email.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
-	
+
 			return properties;
 
 		}

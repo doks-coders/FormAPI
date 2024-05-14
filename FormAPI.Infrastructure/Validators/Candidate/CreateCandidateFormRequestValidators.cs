@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using FormAPI.Models.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormAPI.Infrastructure.Validators.Candidate
 {
@@ -28,7 +23,7 @@ namespace FormAPI.Infrastructure.Validators.Candidate
 			RuleFor(x => x.LastName.Value)
 		   .NotEmpty().WithMessage("Last Name should not be empty.")
 		   .NotNull().WithMessage("Last Name should not be null.");
-		  
+
 
 		}
 	}

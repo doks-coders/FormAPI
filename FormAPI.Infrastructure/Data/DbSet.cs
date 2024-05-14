@@ -1,11 +1,5 @@
 ﻿using FormAPI.Models.Entities;
 using Microsoft.Azure.Cosmos;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormAPI.Infrastructure.Data
 {
@@ -26,7 +20,7 @@ namespace FormAPI.Infrastructure.Data
 			return items.FirstOrDefault();
 		}
 
-		public async Task<List<T>> GetItemCategory(string categoryId,string categoryName)
+		public async Task<List<T>> GetItemCategory(string categoryId, string categoryName)
 		{
 			var containerName = typeof(T).Name;
 			var items = await GetAllItems($"SELECT * FROM {containerName} f WHERE f.{categoryName}=\"{categoryId}\"");
@@ -67,7 +61,7 @@ namespace FormAPI.Infrastructure.Data
 			var baseObject = Entity as BaseEntity;
 			var partitionKeyValue = baseObject.partitionKeyPath;
 			PartitionKey partitionKey = new PartitionKey(partitionKeyValue);
-			
+
 			try
 			{
 				await container.DeleteItemAsync<dynamic>(baseObject.id, partitionKey);

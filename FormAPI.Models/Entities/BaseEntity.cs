@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FormAPI.Models.Entities
+﻿namespace FormAPI.Models.Entities
 {
 	/// <summary>
 	/// This is the base entity, it should be inherited by other entities

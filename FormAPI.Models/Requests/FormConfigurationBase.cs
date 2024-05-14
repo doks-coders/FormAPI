@@ -1,14 +1,8 @@
-﻿using FormAPI.Models.Entities;
-using FormAPI.Models.SharedModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FormAPI.Models.SharedModels;
 
 namespace FormAPI.Models.Requests
 {
-    public class FormConfigurationBase
+	public class FormConfigurationBase
 	{
 		public string ProgramTitle { get; set; }
 

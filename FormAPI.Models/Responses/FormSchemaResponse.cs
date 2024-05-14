@@ -1,24 +1,23 @@
-﻿using FormAPI.Models.Entities;
-using FormAPI.Models.Helpers;
+﻿using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
 using FormAPI.Models.SharedModels;
 
 
 namespace FormAPI.Models.Responses
 {
-    public class FormSchemaResponse
+	public class FormSchemaResponse
 	{
 		public string ProgramTitle { get; set; } = "Work Application";
 
 		public string ProgramDescription { get; set; } = "This is a work application research study";
 
-		public MandatoryEntityProperty FirstName { get; set; } = new MandatoryEntityProperty() { Mandatory = true,Label="First Name",Type="text" };
+		public MandatoryEntityProperty FirstName { get; set; } = new MandatoryEntityProperty() { Mandatory = true, Label = "First Name", Type = "text" };
 
-		public MandatoryEntityProperty LastName { get; set; } = new MandatoryEntityProperty() { Mandatory = true,Label="Last Name",Type="text" };
+		public MandatoryEntityProperty LastName { get; set; } = new MandatoryEntityProperty() { Mandatory = true, Label = "Last Name", Type = "text" };
 
 		public MandatoryEntityProperty Email { get; set; } = new MandatoryEntityProperty() { Mandatory = true, Label = "Last Name", Type = "text" };
 
-		public OptionalEntityProperty? Phone { get; set; } = new OptionalEntityProperty() {  Label = "Phone", Type = "number" };
+		public OptionalEntityProperty? Phone { get; set; } = new OptionalEntityProperty() { Label = "Phone", Type = "number" };
 
 		public OptionalEntityProperty? Nationality { get; set; } = new OptionalEntityProperty() { Label = "Nationality", Type = "text" };
 

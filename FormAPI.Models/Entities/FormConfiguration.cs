@@ -1,16 +1,11 @@
 ﻿using FormAPI.Models.SharedModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormAPI.Models.Entities
 {
-    /// <summary>
-    /// This are the properties of the FormConfiguration entity
-    /// </summary>
-    public class FormConfiguration:BaseEntity
+	/// <summary>
+	/// This are the properties of the FormConfiguration entity
+	/// </summary>
+	public class FormConfiguration : BaseEntity
 	{
 
 		public string ProgramTitle { get; set; }
@@ -27,6 +22,6 @@ namespace FormAPI.Models.Entities
 		public OptionalEntityProperty DateOfBirth { get; set; }
 		public OptionalEntityProperty Gender { get; set; }
 
-	
+
 	}
 }

@@ -1,7 +1,5 @@
 ﻿using FormAPI.Models.SharedModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Cosmos.Core;
-using System.Text;
 using System.Text.Json;
 
 namespace FormAPI.Middlewares
@@ -21,10 +19,11 @@ namespace FormAPI.Middlewares
 			{
 				await _delegate(context);
 
-			}catch(Exception ex)
+			}
+			catch (Exception ex)
 			{
 				var error = new ErrorModel(StatusCodes.Status500InternalServerError.ToString(), ex.Message, JsonSerializer.Serialize(ex.StackTrace));
-			
+
 				context.Response.ContentType = "application/json";
 				context.Response.StatusCode = int.Parse(error.StatusCode);
 
@@ -33,7 +32,7 @@ namespace FormAPI.Middlewares
 
 				await context.Response.WriteAsync(json);
 			}
-			
+
 		}
 	}
 }

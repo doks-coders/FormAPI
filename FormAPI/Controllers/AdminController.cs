@@ -1,22 +1,18 @@
 ﻿using FormAPI.ApplicationCore.Services.Interfaces;
-using FormAPI.Infrastructure.Data;
-using FormAPI.Models.Entities;
-using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
 using FormAPI.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
-using System.Drawing.Printing;
 
 namespace FormAPI.Controllers
 {
 
 	public class AdminController : BaseApiController
 	{
-	
+
 		private readonly IAdminService _adminService;
 
 
-		public AdminController( IAdminService adminService)
+		public AdminController(IAdminService adminService)
 		{
 			_adminService = adminService;
 		}
@@ -110,7 +106,7 @@ namespace FormAPI.Controllers
 		/// <param name="questionId"></param>
 		/// <returns></returns>
 		[HttpDelete("delete-question/{questionId}")]
-		public async Task<ActionResult> DeleteCustomQuestion( string questionId)
+		public async Task<ActionResult> DeleteCustomQuestion(string questionId)
 		{
 			await _adminService.DeleteCustomQuestion(questionId);
 			return Ok("Item Deleted Successfully");

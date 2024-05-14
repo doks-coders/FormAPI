@@ -5,15 +5,10 @@ using FormAPI.Models.Extensions;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
 using FormAPI.Models.Responses;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormAPI.ApplicationCore.Services
 {
-	public class CandidateService:ICandidateService
+	public class CandidateService : ICandidateService
 	{
 
 		public MapperProfiles mapper = new();
@@ -53,13 +48,13 @@ namespace FormAPI.ApplicationCore.Services
 			var validation = await CreateCandidateFormRequestValidator.ValidateAsync(request);
 
 			if (!validation.IsValid) throw new Exception(string.Join(", ", validation.Errors.Select(e => e.ErrorMessage).ToArray()));
-			
+
 
 
 			var entity = mapper.CandidateFormRequestToCandidateForm(request);
 			entity.FormConfigurationId = formId;
 			entity.id = Guid.NewGuid().ToString();
-			if(await _db.CandidateForms.UpsertItem(entity))
+			if (await _db.CandidateForms.UpsertItem(entity))
 			{
 				return;
 			}

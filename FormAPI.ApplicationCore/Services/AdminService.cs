@@ -5,13 +5,6 @@ using FormAPI.Models.Entities;
 using FormAPI.Models.Extensions;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
-using Microsoft.Azure.Cosmos.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 namespace FormAPI.ApplicationCore.Services
 {
