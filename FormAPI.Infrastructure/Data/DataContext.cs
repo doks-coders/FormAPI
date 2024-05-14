@@ -22,17 +22,7 @@ namespace FormAPI.Infrastructure.Data
 		{
 			CosmosClient client = new CosmosClient(cosmosUrl, cosmosKey);
 
-			Database database;
-			try
-			{
-				database = client.GetDatabase(databaseName);
-
-			}
-			catch (Exception)
-			{
-				database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-
-			}
+			Database database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
 
 			return database;
 		}
