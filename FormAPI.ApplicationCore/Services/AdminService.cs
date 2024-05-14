@@ -5,6 +5,7 @@ using FormAPI.Models.Entities;
 using FormAPI.Models.Extensions;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
+using Serilog;
 
 namespace FormAPI.ApplicationCore.Services
 {
@@ -81,11 +82,11 @@ namespace FormAPI.ApplicationCore.Services
 			var validation = await validator.ValidateAsync(request);
 			if (!validation.IsValid) throw new Exception(string.Join(", ", validation.Errors.Select(e => e.ErrorMessage).ToArray()));
 
-			var entity = mapper.CustomQuestionRequestToCustomQuestion(request);
-			entity.id = Guid.NewGuid().ToString();
-			entity.FormConfigId = formConfigId;
-			entity = entity.CheckType();
-			if (await _db.CustomQuestions.UpsertItem(entity))
+			var question = mapper.CustomQuestionRequestToCustomQuestion(request);
+			question.id = Guid.NewGuid().ToString();
+			question.FormConfigId = formConfigId;
+			question = question.CheckType();
+			if (await _db.CustomQuestions.UpsertItem(question))
 			{
 				return;
 			}
@@ -95,9 +96,10 @@ namespace FormAPI.ApplicationCore.Services
 		public async Task UpdateCustomQuestion(CustomQuestionRequest request, string id)
 		{
 			var question = await _db.CustomQuestions.GetItem(id);
-			var entity = mapper.CustomQuestionRequestToCustomQuestion(request);
-			entity.GetIdandPartitionKey(question);
-			if (await _db.CustomQuestions.UpsertItem(entity))
+			if(question==null) throw new Exception("Not Found");
+			var updatedQuestion = mapper.CustomQuestionRequestToCustomQuestion(request);
+			updatedQuestion.GetIdandPartitionKey(question);
+			if (await _db.CustomQuestions.UpsertItem(updatedQuestion))
 			{
 				return;
 			}

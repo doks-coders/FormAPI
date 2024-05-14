@@ -12,6 +12,10 @@ namespace FormAPI.Infrastructure.Validators.Admin
 		   .NotEmpty().WithMessage("Question should not be empty.")
 		   .NotNull().WithMessage("Question should not be null.");
 
+			RuleFor(x => x.Type)
+		   .NotEmpty().WithMessage("Type should not be empty.")
+		   .NotNull().WithMessage("Type should not be null.");
+
 		}
 	}
 }

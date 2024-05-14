@@ -8,9 +8,6 @@ namespace FormAPI.Models.Requests
 
 		public string ProgramDescription { get; set; }
 
-		public MandatoryProperty FirstName { get; set; }
-		public MandatoryProperty LastName { get; set; }
-		public MandatoryProperty Email { get; set; }
 		public OptionalProperty Phone { get; set; }
 		public OptionalProperty Nationality { get; set; }
 		public OptionalProperty CurrentResidence { get; set; }

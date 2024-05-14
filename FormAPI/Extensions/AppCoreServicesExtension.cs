@@ -9,14 +9,14 @@ namespace FormAPI.Extensions
 	{
 		public static IServiceCollection AddApplicationCoreServices(this IServiceCollection services, IConfiguration config)
 		{
-			services.AddScoped(sp => new DataContext(new()
+			services.AddSingleton(sp => new DataContext(new()
 			{
 				CosmosKey = config.GetSection("CosmosConfigurations:CosmosKey").Value,
 				CosmosUrl = config.GetSection("CosmosConfigurations:CosmosUrl").Value,
 				DatabaseName = config.GetSection("CosmosConfigurations:DatabaseName").Value
 
 			}));
-			services.AddScoped<ApplicationDataContext>();
+			services.AddSingleton<ApplicationDataContext>();
 			services.AddScoped<IAdminService, AdminService>();
 			services.AddScoped<ICandidateService, CandidateService>();
 			return services;

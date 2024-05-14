@@ -24,9 +24,11 @@ namespace FormAPI.Models.Extensions
 		/// <returns></returns>
 		public static FormConfiguration SetMandatoryProperties(this FormConfiguration formProperties)
 		{
-			formProperties.FirstName.Mandatory = true;
-			formProperties.LastName.Mandatory = true;
-			formProperties.Email.Mandatory = true;
+
+			formProperties.FirstName = new() { Label = "First Name", Type = "text",Mandatory=true };
+			formProperties.LastName = new() { Label = "Last Name", Type = "text",Mandatory=true };
+			formProperties.Email = new() { Label = "Last Name", Type = "text",Mandatory = true };
+
 			return formProperties;
 		}
 
@@ -43,10 +45,6 @@ namespace FormAPI.Models.Extensions
 			properties.Gender = properties.Gender.OverrideEmptyFields(new() { Label = "Gender", Type = "text" });
 			properties.Nationality = properties.Nationality.OverrideEmptyFields(new() { Label = "Nationality", Type = "text" });
 			properties.IdNumber = properties.IdNumber.OverrideEmptyFields(new() { Label = "Id Number", Type = "number" });
-
-			properties.FirstName = properties.FirstName.OverrideEmptyFields(new() { Label = "First Name", Type = "text" });
-			properties.LastName = properties.LastName.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
-			properties.Email = properties.Email.OverrideEmptyFields(new() { Label = "Last Name", Type = "text" });
 
 			return properties;
 

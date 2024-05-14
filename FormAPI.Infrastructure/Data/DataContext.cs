@@ -11,17 +11,21 @@ namespace FormAPI.Infrastructure.Data
 		private readonly string cosmosKey;
 		private readonly string databaseName;
 
+
+		private readonly CosmosClient client;
 		public DataContext(DbContextOptions options)
 		{
 			cosmosUrl = options.CosmosUrl;
 			cosmosKey = options.CosmosKey;
 			databaseName = options.DatabaseName;
+
+			client = new CosmosClient(cosmosUrl, cosmosKey);
+
 		}
 
 		public async Task<Database> InitialiseDb()
 		{
-			CosmosClient client = new CosmosClient(cosmosUrl, cosmosKey);
-
+			
 			Database database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
 
 			return database;
@@ -35,6 +39,14 @@ namespace FormAPI.Infrastructure.Data
 
 			return container;
 
+		}
+
+		public void Dispose()
+		{
+			if (client != null)
+			{
+				client.Dispose();
+			}
 		}
 
 	}

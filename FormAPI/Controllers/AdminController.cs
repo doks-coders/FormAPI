@@ -18,7 +18,7 @@ namespace FormAPI.Controllers
 		}
 
 		/// <summary>
-		/// This method creates an endpoint used for retrieving the intial form schema. 
+		/// This method creates an endpoint used for retrieving the initial form schema. 
 		/// This will assist the front end developer to design the ui
 		/// </summary>
 		/// <returns></returns>
@@ -41,7 +41,7 @@ namespace FormAPI.Controllers
 		}
 
 		/// <summary>
-		/// This method creates an endpoint used for gets the saved form configuration information
+		/// This method creates an endpoint that gets the saved form configuration information
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet("update-form-config/{id}")]

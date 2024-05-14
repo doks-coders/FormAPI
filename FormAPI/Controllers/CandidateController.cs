@@ -26,7 +26,7 @@ namespace FormAPI.Controllers
 		}
 
 		/// <summary>
-		/// This method creates an endpoint used that saves candidates form
+		/// This method creates an endpoint that saves candidates form
 		/// </summary>
 		/// <returns></returns>
 		[HttpPost("{formId}")]

@@ -1,22 +1,25 @@
 ﻿using FormAPI.Models.Entities;
 using Microsoft.Azure.Cosmos;
+using Serilog;
 
 namespace FormAPI.Infrastructure.Data
 {
 	public class DbSet<T> where T : class
 	{
 		private readonly DataContext _db;
-		private readonly Database _database;
+		private readonly Container container;
 		public DbSet(DataContext db)
 		{
 			_db = db;
+			var containerName = typeof(T).Name;
+			//!!Hack to use one container instance for the lifetime of the application
+			container =  _db.GetContainer(containerName).GetAwaiter().GetResult();
 		}
 
 
 		public async Task<T> GetItem(string id)
 		{
-			var containerName = typeof(T).Name;
-			var items = await GetAllItems($"SELECT * FROM {containerName} f WHERE f.id=\"{id}\"");
+			var items = await GetItemCategory(id, "id");
 			return items.FirstOrDefault();
 		}
 
@@ -29,8 +32,7 @@ namespace FormAPI.Infrastructure.Data
 
 		public async Task<List<T>> GetAllItems(string? query = "SELECT * FROM c")
 		{
-			var containerName = typeof(T).Name;
-			var container = await _db.GetContainer(containerName);
+			
 			var queryDefinition = new QueryDefinition(query);
 			var items = new List<T>();
 			try
@@ -46,6 +48,8 @@ namespace FormAPI.Infrastructure.Data
 			}
 			catch (CosmosException ex)
 			{
+				Log.Fatal(ex, ex.Message);
+			
 			}
 
 			return items;
@@ -53,9 +57,6 @@ namespace FormAPI.Infrastructure.Data
 
 		public async Task<bool> DeleteOneItem(string id)
 		{
-			var containerName = typeof(T).Name;
-			var container = await _db.GetContainer(containerName);
-
 			var Entity = await GetItem(id);
 			if (Entity == null) throw new Exception("Item to be deleted not found");
 			var baseObject = Entity as BaseEntity;
@@ -65,13 +66,13 @@ namespace FormAPI.Infrastructure.Data
 			try
 			{
 				await container.DeleteItemAsync<dynamic>(baseObject.id, partitionKey);
-				Console.WriteLine("Item deleted successfully!");
 
 				return true;
 			}
 			catch (CosmosException ex)
 			{
-				Console.WriteLine("Error deleting item: {0}", ex.Message);
+				Log.Fatal(ex, ex.Message);
+
 				return false;
 			}
 		}
@@ -94,7 +95,8 @@ namespace FormAPI.Infrastructure.Data
 			}
 			catch (CosmosException ex)
 			{
-				Console.WriteLine("Error updating item: {0}", ex.Message);
+				Log.Fatal(ex, ex.Message);
+
 				return false;
 			}
 		}
