@@ -67,7 +67,11 @@ namespace FormAPI.Controllers
 			return Ok("Item Updated Successfully");
 		}
 
-
+		/// <summary>
+		/// TThis method creates an endpoint that  gets all questions associated to a form config
+		/// </summary>
+		/// <param name="formId"></param>
+		/// <returns></returns>
 		[HttpGet("get-form-questions/{formId}")]
 		public async Task<ActionResult> GetCustomQuestionsForFormConfig(string formId)
 		{
@@ -75,6 +79,12 @@ namespace FormAPI.Controllers
 			return Ok(res);
 		}
 
+		/// <summary>
+		/// This method creates an endpoint that creates a custom question
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="formId"></param>
+		/// <returns></returns>
 		[HttpPost("create-question/{formId}")]
 		public async Task<ActionResult> CreateCustomQuestion([FromBody] CustomQuestionRequest request, string formId)
 		{
@@ -82,13 +92,23 @@ namespace FormAPI.Controllers
 			return Ok("Item Created Successfully");
 		}
 
+		/// <summary>
+		/// This method creates an endpoint that updates the custom question
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="questionId"></param>
+		/// <returns></returns>
 		[HttpPut("update-question/{questionId}")]
 		public async Task<ActionResult> UpdateCustomQuestion([FromBody] CustomQuestionRequest request, string questionId)
 		{
 			await _adminService.UpdateCustomQuestion(request, questionId);
 			return Ok("Item Updated Successfully");
 		}
-
+		/// <summary>
+		/// This method creates an endpoint that deletes the custom question
+		/// </summary>
+		/// <param name="questionId"></param>
+		/// <returns></returns>
 		[HttpDelete("delete-question/{questionId}")]
 		public async Task<ActionResult> DeleteCustomQuestion( string questionId)
 		{
