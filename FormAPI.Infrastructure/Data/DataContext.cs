@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos;
+using System.Diagnostics;
 
 namespace FormAPI.Infrastructure.Data
 {
@@ -13,33 +14,31 @@ namespace FormAPI.Infrastructure.Data
 
 
 		private readonly CosmosClient client;
+		public Database Database;
 		public DataContext(DbContextOptions options)
 		{
 			cosmosUrl = options.CosmosUrl;
 			cosmosKey = options.CosmosKey;
 			databaseName = options.DatabaseName;
-
 			client = new CosmosClient(cosmosUrl, cosmosKey);
 
 		}
 
-		public async Task<Database> InitialiseDb()
+		public static async Task<Database> InitialiseDb(DbContextOptions options)
 		{
-			
-			Database database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
-
+			var dataContext = new DataContext(options);
+			Database database = await dataContext.InitialiseDb();
 			return database;
 		}
 
-		public async Task<Container> GetContainer(string containerName)
+		public async Task<Database> InitialiseDb()
 		{
-			var database = await InitialiseDb();
-
-			Container container = await database.CreateContainerIfNotExistsAsync(containerName, "/partitionKeyPath", 400);
-
-			return container;
-
+			Database database = await client.CreateDatabaseIfNotExistsAsync(databaseName);
+			Database = database;
+			return Database;
 		}
+
+		
 
 		public void Dispose()
 		{

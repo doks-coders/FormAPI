@@ -8,14 +8,14 @@ namespace FormAPI.Infrastructure.Data
 	{
 		private readonly DataContext _db;
 		private readonly Container container;
-		public DbSet(DataContext db)
+		public Container Container { get; set; }
+	
+		public DbSet()
 		{
-			_db = db;
-			var containerName = typeof(T).Name;
-			//!!Hack to use one container instance for the lifetime of the application
-			container =  _db.GetContainer(containerName).GetAwaiter().GetResult();
+		
 		}
 
+	
 
 		public async Task<T> GetItem(string id)
 		{
@@ -37,7 +37,7 @@ namespace FormAPI.Infrastructure.Data
 			var items = new List<T>();
 			try
 			{
-				using (var iterator = container.GetItemQueryIterator<T>(queryDefinition))
+				using (var iterator = Container.GetItemQueryIterator<T>(queryDefinition))
 				{
 					while (iterator.HasMoreResults)
 					{
@@ -65,7 +65,7 @@ namespace FormAPI.Infrastructure.Data
 
 			try
 			{
-				await container.DeleteItemAsync<dynamic>(baseObject.id, partitionKey);
+				await Container.DeleteItemAsync<dynamic>(baseObject.id, partitionKey);
 
 				return true;
 			}
@@ -83,14 +83,11 @@ namespace FormAPI.Infrastructure.Data
 			var partitionKeyValue = baseObject.partitionKeyPath;
 
 
-			var containerName = typeof(T).Name;
-			var container = await _db.GetContainer(containerName);
-
 			var partitionKey = new PartitionKey(partitionKeyValue);
 			ItemResponse<T> item;
 			try
 			{
-				item = await container.UpsertItemAsync<T>(Entity, partitionKey);
+				item = await Container.UpsertItemAsync<T>(Entity, partitionKey);
 				return true;
 			}
 			catch (CosmosException ex)
