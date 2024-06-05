@@ -1,10 +1,13 @@
-﻿using FormAPI.ApplicationCore.Services.Interfaces;
+﻿using FormAPI.ApplicationCore.Helpers;
+using FormAPI.ApplicationCore.Services.Interfaces;
+using FormAPI.ApplicationCore.Utils;
 using FormAPI.Infrastructure.Data;
 using FormAPI.Infrastructure.Validators.Admin;
 using FormAPI.Models.Entities;
 using FormAPI.Models.Extensions;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
+using FormAPI.Models.Responses;
 using Serilog;
 
 namespace FormAPI.ApplicationCore.Services
@@ -26,17 +29,17 @@ namespace FormAPI.ApplicationCore.Services
 		/// <param name="properties"></param>
 		/// <returns></returns>
 		/// <exception cref="Exception"></exception>
-		public async Task CreateForm(CreateFormConfigurationRequest properties)
+		public async Task<string> CreateForm(CreateFormConfigurationRequest properties)
 		{
 			var item = mapper.CreateFormConfigurationRequestToFormConfiguration(properties);
-			item = item.SetDefaultIfEmpty();
-			item = item.SetMandatoryProperties();
+			item  = AdminServiceUtils.ConfigureFormConfiguration(item);
 			item.id = Guid.NewGuid().ToString();
+
 			if (await _db.FormConfigurations.UpsertItem(item))
 			{
-				return;
+				return item.id;
 			}
-			throw new Exception("Did not Save Successfully");
+			throw new CustomException(ErrorStatusEnums.FormCreationFailed);
 		}
 
 		/// <summary>
@@ -47,9 +50,8 @@ namespace FormAPI.ApplicationCore.Services
 		/// <exception cref="Exception"></exception>
 		public async Task<FormConfiguration> GetFormConfig(string id)
 		{
-
 			var res = await _db.FormConfigurations.GetItem(id);
-			if (res == null) throw new Exception("Not Found");
+			if (res == null) throw new CustomException(ErrorStatusEnums.FormNotFound);
 			return res;
 		}
 
@@ -63,56 +65,63 @@ namespace FormAPI.ApplicationCore.Services
 		public async Task UpdateForm(UpdateFormConfigurationRequest request, string id)
 		{
 			var item = await _db.FormConfigurations.GetItem(id);
-			if (item == null) throw new Exception("Not Found");
+			if (item == null) throw new CustomException(ErrorStatusEnums.FormNotFound);
+
 			var updatedProperty = mapper.UpdateFormConfigurationRequestToFormConfiguration(request);
+			updatedProperty = AdminServiceUtils.ConfigureFormConfiguration(updatedProperty);
 			updatedProperty = updatedProperty.GetIdandPartitionKey(item);
-			updatedProperty = updatedProperty.SetDefaultIfEmpty();
-			updatedProperty = updatedProperty.SetMandatoryProperties();
 			if (await _db.FormConfigurations.UpsertItem(updatedProperty))
 			{
 				return;
 			}
-			throw new Exception("Did not Save Successfully");
+			throw new CustomException(ErrorStatusEnums.FormUpdateFailed);
 
 		}
 
-		public async Task CreateCustomQuestion(CustomQuestionRequest request, string formConfigId)
+		public async Task<string> CreateCustomQuestion(CustomQuestionRequest request, string formConfigId)
 		{
-			CustomQuestionRequestValidator validator = new CustomQuestionRequestValidator();
-			var validation = await validator.ValidateAsync(request);
-			if (!validation.IsValid) throw new Exception(string.Join(", ", validation.Errors.Select(e => e.ErrorMessage).ToArray()));
 
+			await AdminServiceUtils.ValidateQuestion(request);
 			var question = mapper.CustomQuestionRequestToCustomQuestion(request);
-			question.id = Guid.NewGuid().ToString();
-			question.FormConfigId = formConfigId;
-			question = question.CheckType();
+
+			//Configure Question
+			question = AdminServiceUtils.ConfigureQuestion(question, formConfigId);
 			if (await _db.CustomQuestions.UpsertItem(question))
 			{
-				return;
+				return question.id;
 			}
-			throw new Exception("There was a problem updating selected question");
+			throw new CustomException(ErrorStatusEnums.QuestionCreationFailed);
 		}
 
 		public async Task UpdateCustomQuestion(CustomQuestionRequest request, string id)
 		{
+			await AdminServiceUtils.ValidateQuestion(request);
 			var question = await _db.CustomQuestions.GetItem(id);
-			if(question==null) throw new Exception("Not Found");
+			if (question == null) throw new CustomException(ErrorStatusEnums.QuestionNotFound);
 			var updatedQuestion = mapper.CustomQuestionRequestToCustomQuestion(request);
-			updatedQuestion.GetIdandPartitionKey(question);
+			updatedQuestion = AdminServiceUtils.ConfigureUpdatedQuestion(updatedQuestion, question);
+			
 			if (await _db.CustomQuestions.UpsertItem(updatedQuestion))
 			{
 				return;
 			}
-			throw new Exception("There was a problem updating selected question");
+			throw new CustomException(ErrorStatusEnums.QuestionUpdateFailed);
 		}
 
+		public async Task<CustomQuestionResponse> GetCustomQuestion(string id)
+		{
+			var question = await _db.CustomQuestions.GetItem(id);
+			if (question == null) throw new CustomException(ErrorStatusEnums.QuestionNotFound);
+			var response = mapper.CustomQuestionToCustomQuestionResponse(question);
+			return response;
+		}
 		public async Task DeleteCustomQuestion(string id)
 		{
 			if (await _db.CustomQuestions.DeleteOneItem(id))
 			{
 				return;
 			}
-			throw new Exception("There was a problem deleting selected item");
+			throw new CustomException(ErrorStatusEnums.QuestionDeleteFailed);
 
 		}
 

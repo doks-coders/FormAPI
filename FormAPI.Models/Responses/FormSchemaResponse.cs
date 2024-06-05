@@ -29,7 +29,7 @@ namespace FormAPI.Models.Responses
 
 		public OptionalEntityProperty? Gender { get; set; } = new OptionalEntityProperty() { Label = "Gender", Type = "text" };
 
-		public List<CustomQuestionRequest> CustomQuestions { get; set; } = new List<CustomQuestionRequest>() { new() };
+		public CustomQuestionResponse CustomQuestions { get; set; } = new CustomQuestionResponse() { };
 
 		public List<string> TypeOptionsDynamic { get; set; } = Constants.TypeOptionsDynamic;
 

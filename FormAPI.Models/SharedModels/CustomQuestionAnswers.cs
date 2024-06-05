@@ -1,6 +1,6 @@
 ﻿namespace FormAPI.Models.SharedModels
 {
-	public class DynamicFormAnswers
+	public class CustomQuestionAnswers
 	{
 		public string Question { get; set; }
 		public string Type { get; set; }

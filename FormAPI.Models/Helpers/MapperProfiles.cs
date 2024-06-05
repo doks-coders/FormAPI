@@ -13,6 +13,9 @@ namespace FormAPI.Models.Helpers
 		public partial FormConfigurationsResponse FormConfigurationToFormConfigurationResponse(FormConfiguration form);
 		public partial CandidateForm CandidateFormRequestToCandidateForm(CreateCandidateFormRequest form);
 		public partial CustomQuestion CustomQuestionRequestToCustomQuestion(CustomQuestionRequest form);
+		public partial CustomQuestionResponse CustomQuestionToCustomQuestionResponse(CustomQuestion entity);
 
+
+		
 	}
 }

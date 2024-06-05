@@ -1,6 +1,7 @@
 ﻿using FormAPI.Models.SharedModels;
 using Microsoft.Azure.Cosmos.Core;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FormAPI.Middlewares
 {
@@ -18,7 +19,6 @@ namespace FormAPI.Middlewares
 			try
 			{
 				await _delegate(context);
-
 			}
 			catch (Exception ex)
 			{
@@ -26,6 +26,7 @@ namespace FormAPI.Middlewares
 
 				context.Response.ContentType = "application/json";
 				context.Response.StatusCode = int.Parse(error.StatusCode);
+
 
 
 				var json = JsonSerializer.Serialize(error);

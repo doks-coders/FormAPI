@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
 
 namespace FormAPI.Infrastructure.Validators.Admin
@@ -13,6 +14,7 @@ namespace FormAPI.Infrastructure.Validators.Admin
 		   .NotNull().WithMessage("Question should not be null.");
 
 			RuleFor(x => x.Type)
+				.Equal(y => Constants.TypeOptionsDynamic.All(u => u != y.Type) ? "Wrong Type" : y.Type).WithMessage("Please Select the right type")
 		   .NotEmpty().WithMessage("Type should not be empty.")
 		   .NotNull().WithMessage("Type should not be null.");
 

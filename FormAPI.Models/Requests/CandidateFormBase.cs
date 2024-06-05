@@ -15,6 +15,6 @@ namespace FormAPI.Models.Requests
 		public CandidateStaticProperties? DateOfBirth { get; set; }
 		public CandidateStaticProperties? Gender { get; set; }
 
-		public List<DynamicFormAnswers> CustomQuestions { get; set; } = new();
+		public List<CustomQuestionAnswers> CustomQuestions { get; set; } = new();
 	}
 }

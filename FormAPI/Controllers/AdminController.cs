@@ -1,8 +1,8 @@
 ﻿using FormAPI.ApplicationCore.Services.Interfaces;
+using FormAPI.Extensions;
 using FormAPI.Models.Requests;
 using FormAPI.Models.Responses;
 using Microsoft.AspNetCore.Mvc;
-
 namespace FormAPI.Controllers
 {
 
@@ -17,6 +17,13 @@ namespace FormAPI.Controllers
 			_adminService = adminService;
 		}
 
+		
+
+		[HttpGet("test")]
+		public async Task<ActionResult> Test()
+		{
+			return ApiResponse.Send();
+		}
 		/// <summary>
 		/// This method creates an endpoint used for retrieving the initial form schema. 
 		/// This will assist the front end developer to design the ui
@@ -35,9 +42,8 @@ namespace FormAPI.Controllers
 		[HttpPost("create-form-configuration")]
 		public async Task<ActionResult> CreateForm([FromBody] CreateFormConfigurationRequest properties)
 		{
-			await _adminService.CreateForm(properties);
-
-			return Ok("Item Created Successfully");
+			var id = await _adminService.CreateForm(properties);
+			return Ok(id);
 		}
 
 		/// <summary>
@@ -75,6 +81,12 @@ namespace FormAPI.Controllers
 			return Ok(res);
 		}
 
+
+		[HttpGet("create-question")]
+		public async Task<ActionResult> CreateCustomQuestion()
+		{
+			return Ok(new CustomQuestionResponse());
+		}
 		/// <summary>
 		/// This method creates an endpoint that creates a custom question
 		/// </summary>
@@ -84,8 +96,16 @@ namespace FormAPI.Controllers
 		[HttpPost("create-question/{formId}")]
 		public async Task<ActionResult> CreateCustomQuestion([FromBody] CustomQuestionRequest request, string formId)
 		{
-			await _adminService.CreateCustomQuestion(request, formId);
-			return Ok("Item Created Successfully");
+			var id = await _adminService.CreateCustomQuestion(request, formId);
+			return Ok(id);
+		}
+
+
+		[HttpGet("update-question/{questionId}")]
+		public async Task<ActionResult> GetCustomQuestion(string questionId)
+		{
+			var response = await _adminService.GetCustomQuestion(questionId);
+			return Ok(response);
 		}
 
 		/// <summary>

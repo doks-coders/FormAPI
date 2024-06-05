@@ -1,12 +1,12 @@
 ﻿using FormAPI.Models.Entities;
 using FormAPI.Models.Helpers;
 using FormAPI.Models.Requests;
-using FormAPI.Models.Requests.QuestionRequests;
+using FormAPI.Models.Responses.QuestionResponse;
 using System.Text.Json;
 
 namespace FormAPI.Models.Extensions
 {
-	public static class CustomQuestionExtensions
+    public static class CustomQuestionExtensions
 	{
 		/// <summary>
 		/// Checks the types to verify the type entered into the system
@@ -68,15 +68,15 @@ namespace FormAPI.Models.Extensions
 			switch (item.Type)
 			{
 				case "Paragraph":
-					return JsonSerializer.Deserialize<ParagraphRequest>(itemObject);
+					return JsonSerializer.Deserialize<ParagraphResponse>(itemObject);
 				case "Yes/No":
-					return JsonSerializer.Deserialize<YesNoRequest>(itemObject);
+					return JsonSerializer.Deserialize<YesNoResponse>(itemObject);
 				case "Number":
-					return JsonSerializer.Deserialize<NumberRequest>(itemObject);
+					return JsonSerializer.Deserialize<NumberResponse>(itemObject);
 				case "Dropdown":
-					return JsonSerializer.Deserialize<DropDownRequest>(itemObject);
+					return JsonSerializer.Deserialize<DropDownResponse>(itemObject);
 				case "MultipleChoice":
-					return JsonSerializer.Deserialize<MultiChoiceRequest>(itemObject);
+					return JsonSerializer.Deserialize<MultiChoiceResponse>(itemObject);
 				default:
 					return JsonSerializer.Deserialize<CustomQuestionRequest>(itemObject); ;
 
